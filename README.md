@@ -68,6 +68,36 @@ Histogram 包含三个指标：
 | φ 和滑动窗口 | Prometheus 表达式设置        | 客户端设置               |
 | 聚合         | 根据表达式聚合               | 一般不可聚合             |
 
+### 源码讲解
+
+注册 
+1、https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L396
+
+2、https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L264:20
+
+
+收集
+https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L405
+
+收集到的数据
+https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L478#tab=def
+
+数据组装
+1、https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L581
+
+2、https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/internal/metric.go?L69
+
+数据转换TEXT
+https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/common/expfmt/text_create.go?L67:6#tab=references
+
+写入io.Writer流
+https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/common/expfmt/encode.go?L64:6#tab=references
+
+TCP返回
+https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/promhttp/http.go?L163:17
+
+数据写入文件
+https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L554
 
 ### 参考
 
