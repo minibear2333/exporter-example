@@ -99,6 +99,28 @@ https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92
 数据写入文件
 https://sourcegraph.com/github.com/minibear2333/exporter-example@ece1f0b9acc0f92ac14c335f1bdc405e253d0fc3/-/blob/vendor/github.com/prometheus/client_golang/prometheus/registry.go?L554
 
+### pushgateway
+
+`pushgateway`的样例
+
+```go
+func (p *PushGateway) Push(name string, help string, labels map[string]string, value float64) {
+	collectDurabilityPercent := prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: name,
+		Help: help,
+	})
+	collectDurabilityPercent.Set(value)
+	pusher := push.New(p.QueryAddress, p.JobName).BasicAuth(p.Username, p.Password)
+	pusher.Collector(collectDurabilityPercent)
+	for k, v := range labels {
+		pusher.Grouping(k, v)
+	}
+	if err := pusher.Push(); err != nil {
+		fmt.Println("Could not push completion time to Pushgateway:", err)
+	}
+}
+```
+
 ### 参考
 
 [认识Prometheus，开发自己的exporter](https://www.jianshu.com/p/5db23a280e1d)
